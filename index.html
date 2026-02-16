@@ -6,14 +6,15 @@
     <title>Infinity - Mayajaal</title>
     <style>
         :root {
-            --neon-green: #0f0;
-            --dark-bg: #050505;
-            --glass-bg: rgba(20, 20, 20, 0.4);
+            --neon-color: #00ffcc;
+            --dark-bg: #030303;
+            --glass-bg: rgba(15, 15, 15, 0.6);
         }
         body {
             margin: 0;
             padding: 0;
             background-color: var(--dark-bg);
+            background-image: radial-gradient(circle at 50% 0%, rgba(0, 255, 204, 0.15), transparent 50%);
             color: #fff;
             font-family: 'Courier New', Courier, monospace;
             overflow-x: hidden;
@@ -24,72 +25,92 @@
             position: fixed;
             top: 50%;
             left: 50%;
-            width: 350px;
-            height: 350px;
-            background: var(--neon-green);
-            filter: blur(180px);
+            width: 400px;
+            height: 400px;
+            background: var(--neon-color);
+            filter: blur(150px);
             transform: translate(-50%, -50%);
             z-index: -1;
-            opacity: 0.35;
+            opacity: 0.2;
+            animation: pulse 4s infinite alternate;
+        }
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.2; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.4; }
         }
         /* Khoji-Brahmastra Bar */
         .search-container {
-            margin: 60px auto 40px;
+            margin: 70px auto 50px;
             text-align: center;
             width: 90%;
-            max-width: 600px;
+            max-width: 650px;
         }
         .search-bar {
             width: 100%;
-            padding: 18px;
-            border-radius: 40px;
-            border: 1px solid rgba(0, 255, 0, 0.3);
+            padding: 20px 25px;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 255, 204, 0.2);
             background: var(--glass-bg);
             color: #fff;
             font-size: 16px;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
             outline: none;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
-            transition: 0.4s;
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.05);
+            transition: all 0.4s ease;
         }
         .search-bar:focus {
-            border-color: var(--neon-green);
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
+            border-color: var(--neon-color);
+            box-shadow: 0 0 40px rgba(0, 255, 204, 0.3);
+            transform: translateY(-2px);
         }
-        /* Mayajaal Grid */
+        /* Premium Grid Layout */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-            gap: 25px;
-            padding: 20px;
-            max-width: 850px;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 20px;
+            padding: 10px 25px;
+            max-width: 900px;
             margin: 0 auto;
         }
         .app-card {
-            background: var(--glass-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 25px 15px;
+            background: linear-gradient(145deg, rgba(20,20,20,0.8), rgba(10,10,10,0.9));
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 25px;
+            padding: 30px 15px;
             text-align: center;
             cursor: pointer;
-            backdrop-filter: blur(15px);
-            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .app-card::before {
+            content: "";
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(0,255,204,0.1) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         .app-card:hover {
-            border-color: var(--neon-green);
-            box-shadow: 0 10px 25px rgba(0, 255, 0, 0.3);
-            transform: translateY(-8px);
+            border-color: rgba(0, 255, 204, 0.5);
+            box-shadow: 0 15px 35px rgba(0, 255, 204, 0.2);
+            transform: translateY(-8px) scale(1.02);
         }
+        .app-card:hover::before { opacity: 1; }
+        
         .icon {
-            font-size: 35px;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+            font-size: 40px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.3));
         }
         h3 {
             margin: 0;
-            font-size: 13px;
-            letter-spacing: 1px;
-            font-weight: normal;
+            font-size: 14px;
+            letter-spacing: 1.5px;
+            font-weight: 500;
+            color: #ddd;
         }
     </style>
 </head>
@@ -97,7 +118,7 @@
     <div class="bg-glow"></div>
 
     <div class="search-container">
-        <input type="text" class="search-bar" id="searchBox" placeholder="Anantpura se duniya khoj... (Ghost Mode)">
+        <input type="text" class="search-bar" id="searchBox" placeholder="Bina pehchaan ke kuch bhi khoj... (Ghost Mode)">
     </div>
 
     <div class="grid-container">
@@ -105,46 +126,36 @@
             <div class="icon">📺</div>
             <h3>YouTube</h3>
         </div>
-        <div class="app-card" onclick="chhalDwar('https://web.whatsapp.com')">
-            <div class="icon">💬</div>
-            <h3>WhatsApp</h3>
+        <div class="app-card" onclick="chhalDwar('https://braflix.video')">
+            <div class="icon">🎬</div>
+            <h3>Cinema</h3>
         </div>
-        <div class="app-card" onclick="chhalDwar('https://tiktok.com')">
-            <div class="icon">🎵</div>
-            <h3>TikTok</h3>
-        </div>
-        <div class="app-card" onclick="chhalDwar('https://instagram.com')">
-            <div class="icon">📸</div>
-            <h3>Instagram</h3>
-        </div>
-        <div class="app-card" onclick="chhalDwar('https://www.jiocinema.com')">
+        <div class="app-card" onclick="chhalDwar('https://photocall.tv/')">
             <div class="icon">📡</div>
             <h3>Live TV</h3>
         </div>
+        <div class="app-card" onclick="chhalDwar('https://urlebird.com/')">
+            <div class="icon">🎵</div>
+            <h3>TikTok</h3>
+        </div>
+        <div class="app-card" onclick="chhalDwar('https://www.picuki.com/')">
+            <div class="icon">📸</div>
+            <h3>Instagram</h3>
+        </div>
         <div class="app-card" onclick="chhalDwar('https://chatgpt.com')">
-            <div class="icon">🤖</div>
-            <h3>Khufiya AI</h3>
+            <div class="icon">🧠</div>
+            <h3>AI Brain</h3>
         </div>
     </div>
 
     <script>
-        // Chhal-Dwar Engine (Bypass Logic)
         function chhalDwar(targetUrl) {
-            let finalUrl = targetUrl; 
-            
-            // TikTok aur block sites ke liye temporary Google WebLight / Translate Proxy bypass
-            if(targetUrl.includes("tiktok") || targetUrl.includes("xvideos") || targetUrl.includes("pornhub")) {
-                 finalUrl = 'https://translate.google.com/translate?sl=auto&tl=en&u=' + encodeURIComponent(targetUrl);
-            }
-
-            window.location.href = finalUrl;
+            window.location.href = targetUrl;
         }
 
-        // Khoji-Brahmastra (Search Engine Setup)
         document.getElementById('searchBox').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 let query = this.value;
-                // Abhi ke liye DuckDuckGo ka private engine use kar rahe hain
                 let searchUrl = 'https://duckduckgo.com/?q=' + encodeURIComponent(query);
                 window.location.href = searchUrl;
             }
